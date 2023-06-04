@@ -1,0 +1,17 @@
+/** @format */
+
+html {
+  font-size: 10px;
+}
+
+.fieldContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.playField {
+  margin: 4rem 0 0 0;
+  border-style: solid;
+  border-width: 0.1rem;
+}
