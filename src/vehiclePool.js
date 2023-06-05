@@ -1,29 +1,17 @@
 /** @format */
 
-import blueCar from "./assets/car-blue.svg";
-import greenCar from "./assets/car-green.svg";
-import orangeCar from "./assets/car-orange.svg";
-import pinkCar from "./assets/car-pink.svg";
-import schoolBus from "./assets/bus-school.svg";
-import bus from "./assets/bus.svg";
-import transport from "./assets/transport.svg";
-import blueTruck from "./assets/truck-blue.svg";
-import greyTruck from "./assets/truck-grey.svg";
-import oliveTruck from "./assets/truck-olive.svg";
-import purpleTruck from "./assets/truck-purple.svg";
-
 const vehiclePool = [
-  { id: 0, vehicle: blueCar, width: 142, height: 70 },
-  { id: 1, vehicle: greenCar, width: 142, height: 70 },
-  { id: 2, vehicle: orangeCar, width: 142, height: 70 },
-  { id: 3, vehicle: pinkCar, width: 142, height: 70 },
-  { id: 4, vehicle: schoolBus, width: 242, height: 70 },
-  { id: 5, vehicle: bus, width: 242, height: 70 },
-  { id: 6, vehicle: transport, width: 308, height: 70 },
-  { id: 7, vehicle: blueTruck, width: 163, height: 70 },
-  { id: 8, vehicle: greyTruck, width: 163, height: 70 },
-  { id: 9, vehicle: oliveTruck, width: 163, height: 70 },
-  { id: 10, vehicle: purpleTruck, width: 163, height: 70 },
+  { id: 0, vehicle: "src/assets/car-blue.svg", width: 142, height: 70 },
+  { id: 1, vehicle: "src/assets/car-green.svg", width: 142, height: 70 },
+  { id: 2, vehicle: "src/assets/car-orange.svg", width: 142, height: 70 },
+  { id: 3, vehicle: "src/assets/car-pink.svg", width: 142, height: 70 },
+  { id: 4, vehicle: "src/assets/bus-school.svg", width: 242, height: 70 },
+  { id: 5, vehicle: "src/assets/bus.svg", width: 242, height: 70 },
+  { id: 6, vehicle: "src/assets/transport.svg", width: 308, height: 70 },
+  { id: 7, vehicle: "src/assets/truck-blue.svg", width: 163, height: 70 },
+  { id: 8, vehicle: "src/assets/truck-grey.svg", width: 163, height: 70 },
+  { id: 9, vehicle: "src/assets/truck-olive.svg", width: 163, height: 70 },
+  { id: 10, vehicle: "src/assets/truck-purple.svg", width: 163, height: 70 },
 ];
 
 export default vehiclePool;
