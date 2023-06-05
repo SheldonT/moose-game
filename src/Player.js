@@ -48,11 +48,10 @@ export default class Player {
     //player foot size in relation to player width
     const footSize = this.playerWidth * 0.4; //10
 
-    //this.playerLeft = this.fieldWidth / 2 + this.incX - this.playerWidth / 2; //left side
-    //this.playerRight = this.fieldWidth / 2 + (this.incX + this.playerWidth / 2);
-    //this.playerHead = this.fieldHeight / 2 + this.incY - 75; //top of the head
-    //this.playerTail =
-    //this.fieldHeight / 2 + this.incY + this.playerHeight / 2 - 20; //the butt
+    this.playerLeft = this.incX; //this.fieldWidth / 2 + this.incX - this.playerWidth / 2; //left side
+    this.playerRight = this.incX + this.playerWidth; //this.fieldWidth / 2 + (this.incX + this.playerWidth / 2);
+    this.playerHead = this.incY; //top of the head
+    this.playerTail = this.incY + this.playerHeight; //the butt
 
     ctx.save(); //save the current canvas state
 

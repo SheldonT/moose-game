@@ -2,6 +2,7 @@
 
 import Player from "./Player.js";
 import Vehicle from "./Vehicle.js";
+import GameLogic from "./GameLogic.js";
 
 const canvas = document.getElementById("playField");
 
@@ -26,6 +27,8 @@ const lane = [
 
 const moose = new Player(5, gameFieldWidth, gameFieldHeight);
 document.addEventListener("keydown", (event) => movePlayer(event.key));
+
+const logic = new GameLogic(lane, moose);
 
 let changeDir = 1;
 
@@ -69,16 +72,16 @@ function movePlayer(k) {
     }
   }
 
+  console.log(`${moose.playerRight}  ${lane[3].posX}`);
+
   if (moose.i === 8) changeDir = -2;
   if (moose.i === -8) changeDir = 2;
 
   moose.i = moose.i + changeDir;
-  console.log(moose.i);
 }
 
 function gameLoop() {
-  i = i + 1;
-  const angle = (i * Math.PI) / 180;
+  if (logic.pause === true) console.log("Hit from left");
 
   background();
 
@@ -93,6 +96,8 @@ function gameLoop() {
   lane[3].drawVehicle(ctx, gameFieldHeight * 0.7);
 
   ctx.restore();
+
+  if (logic.playerHit()) return;
 
   requestAnimationFrame(gameLoop);
 }

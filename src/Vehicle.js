@@ -5,7 +5,7 @@ import vehiclePool from "./vehiclePool.js";
 export default class Vehicle {
   constructor(d, gfWidth, gfHeight) {
     this.frameReset = 0;
-    this.speed = Math.floor(Math.random() * 8) + 2; //starting speed
+    this.speed = Math.floor(Math.random() * 5) + 2; //starting speed
     this.frame = gfWidth; //current frame count
     this.vehicleRange = gfWidth;
     this.screenX = gfWidth;
@@ -38,23 +38,33 @@ export default class Vehicle {
     this.posBottom = startY + this.vehicleHeight;
 
     if (this.direction === 1) {
-      c.save();
-      c.translate(this.frame * this.direction, startY);
-      //making the height and width of the vehicle proportional to screen size.
-      c.drawImage(this.vehicleImg, 0, 0, this.vehicleWidth, this.vehicleHeight);
-      c.restore();
+      this.posX = this.frame;
     }
 
     if (this.direction === -1) {
-      c.save();
+      this.posX = this.screenX - 2 * this.vehicleWidth - this.frame;
+    }
+    c.fillStyle = "#000000";
+
+    c.save();
+
+    if (this.direction === 1) {
+      c.translate(this.posX, startY);
+      //making the height and width of the vehicle proportional to screen size.
+      c.drawImage(this.vehicleImg, 0, 0, this.vehicleWidth, this.vehicleHeight);
+    }
+
+    if (this.direction === -1) {
       c.translate(
         this.screenX - this.vehicleWidth - this.frame,
         startY + this.vehicleHeight
       );
+
       c.rotate(Math.PI);
+
       c.drawImage(this.vehicleImg, 0, 0, this.vehicleWidth, this.vehicleHeight);
-      c.restore();
     }
+    c.restore();
 
     if (this.frame >= this.frameReset + this.vehicleRange) {
       //reset frame count every "vehicleRange" frames
@@ -66,7 +76,7 @@ export default class Vehicle {
       this.vehicleRange = this.screenX + this.vehicleWidth;
 
       this.frameReset = this.frame - this.vehicleRange;
-      this.speed = Math.floor(Math.random() * 8) + 2; //change the speed of the vehicle
+      this.speed = Math.floor(Math.random() * 5) + 2; //change the speed of the vehicle
       this.frame = (this.vehicleWidth + 100) * -1;
 
       this.vehicleImg.src = vehiclePool[id].vehicle;
@@ -74,14 +84,6 @@ export default class Vehicle {
       //this.vehicleHeight = vehiclePool[id].height;
     } else {
       this.frame = this.frame + this.speed; //increment frame by carSpeed.
-    }
-
-    if (this.direction === 1) {
-      this.posX = this.frame * this.direction + this.vehicleWidth;
-    }
-
-    if (this.direction === -1) {
-      this.posX = this.frame * this.direction;
     }
   }
 }
