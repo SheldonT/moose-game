@@ -37,15 +37,11 @@ export default class Player {
 
   resetPlayer() {
     this.incX = this.fieldWidth / 2;
-    this.incY = 0;
+    this.incY = this.fieldHeight - this.playerHeight;
     this.i = 0;
   }
 
   drawPlayer(ctx) {
-    //player height and width in relation to field size.
-    //this.playerWidth = this.fieldWidth * 0.03;
-    //this.playerHeight = this.fieldHeight * 0.15;
-    //player foot size in relation to player width
     const footSize = this.playerWidth * 0.4; //10
 
     this.playerLeft = this.incX; //this.fieldWidth / 2 + this.incX - this.playerWidth / 2; //left side
