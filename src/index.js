@@ -17,9 +17,7 @@ const backgroundColor = "#1BCC0C";
 const roadImg = new Image();
 roadImg.src = "src/assets/road.svg";
 
-const font = "Arial";
-
-let i = 0;
+const font = "Gasoek One";
 
 const lane = [
   new Vehicle(1, gameFieldWidth, gameFieldHeight),
@@ -29,16 +27,12 @@ const lane = [
 ];
 
 const moose = new Player(3, gameFieldWidth, gameFieldHeight);
-document.addEventListener("keydown", (event) => {
-  console.log(event.keyCode);
-  movePlayer(event.key);
-});
 
-const logic = new GameLogic(lane, moose);
+const logic = new GameLogic(lane, moose, gameLoop);
 
 const scoreBoard = new ScoreBoard(font, 30, gameFieldWidth);
 
-let changeDir = 1;
+let frameCount = 0;
 
 function background() {
   ctx.fillStyle = backgroundColor;
@@ -61,56 +55,51 @@ function background() {
   );
 }
 
-function resetGameBoard() {
-  console.log(moose.lives);
-  if (logic.pause) {
-    moose.resetPlayer();
-    gameLoop();
-  }
+function gameEnd() {
+  const gameOver = "Game Over";
+
+  setInterval(() => {
+    ctx.fillStyle = "#000000";
+    ctx.font = `40px ${font}`;
+    ctx.fillText(
+      gameOver,
+      gameFieldWidth / 2 - ctx.measureText(gameOver).width / 2,
+      gameFieldHeight / 2 + 20
+    );
+  }, 5000);
 }
 
-function movePlayer(k) {
-  switch (k) {
-    case "ArrowUp": {
-      moose.incY = moose.incY - 10;
-      break;
-    }
-    case "ArrowDown": {
-      moose.incY = moose.incY + 10;
-      break;
-    }
-    case "ArrowLeft": {
-      moose.incX = moose.incX - 10;
-      break;
-    }
-    case "ArrowRight": {
-      moose.incX = moose.incX + 10;
-      break;
-    }
-    case "Enter": {
-      resetGameBoard();
-      break;
-    }
-    case "Space": {
-      console.log("Space");
-      logic.pause = !logic.pause;
-      break;
-    }
+function gameStart() {
+  const startText = "Press Enter";
+
+  frameCount++;
+
+  if (frameCount <= 50) {
+    ctx.fillStyle = "#000000";
+    ctx.font = `40px ${font}`;
+    ctx.fillText(
+      startText,
+      gameFieldWidth / 2 - ctx.measureText(startText).width / 2,
+      gameFieldHeight / 2 + 20
+    );
   }
-
-  if (moose.i === 8) changeDir = -2;
-  if (moose.i === -8) changeDir = 2;
-
-  moose.i = moose.i + changeDir;
+  if (frameCount >= 100) frameCount = 0;
 }
 
 function gameLoop() {
+  if (logic.start) frameCount = 0;
+
+  if (logic.pause) {
+    return;
+  }
+
   background();
-  scoreBoard.drawScoreBoard(ctx, moose.lives);
 
   ctx.save();
 
-  moose.drawPlayer(ctx);
+  if (logic.start) moose.drawPlayer(ctx);
+
+  if (!logic.start) gameStart();
 
   lane[0].drawVehicle(ctx, gameFieldHeight * 0.21);
   lane[1].drawVehicle(ctx, gameFieldHeight * 0.3);
@@ -119,9 +108,10 @@ function gameLoop() {
   lane[3].drawVehicle(ctx, gameFieldHeight * 0.7);
 
   ctx.restore();
-  logic.playerHit();
 
-  if (logic.pause) return;
+  logic.playerHit();
+  logic.playerWin();
+  scoreBoard.drawScoreBoard(ctx, moose.lives, moose.score, logic.level);
 
   requestAnimationFrame(gameLoop);
 }

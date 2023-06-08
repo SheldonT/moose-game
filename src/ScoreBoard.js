@@ -10,21 +10,21 @@ export default class ScoreBoard {
     this.mooseIcon.src = "src/assets/Moose-icon-blk.svg";
   }
 
-  drawScoreBoard(ctx, playerLives) {
+  drawScoreBoard(ctx, playerLives, score, level) {
     ctx.font = `${this.fontSize}px ${this.font}`;
     ctx.fillStyle = "#000000";
+
+    ctx.fillText(`Level ${level}`, 50, this.fontSize + 10);
+    ctx.fillText(score, 300, this.fontSize + 10);
     ctx.fillText(
       ` x ${playerLives}`,
-      this.gameFieldWidth - ctx.measureText(` x ${playerLives}`).width - 30,
+      this.gameFieldWidth - ctx.measureText(` x ${playerLives}`).width - 50,
       this.fontSize + 10
     );
 
     ctx.drawImage(
       this.mooseIcon,
-      this.gameFieldWidth -
-        ctx.measureText(` x ${playerLives}`).width -
-        30 -
-        45,
+      this.gameFieldWidth - ctx.measureText(` x ${playerLives}`).width - 95,
       10,
       45,
       30

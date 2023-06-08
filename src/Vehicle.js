@@ -33,10 +33,7 @@ export default class Vehicle {
     return id;
   }
 
-  drawVehicle(c, startY) {
-    this.posTop = startY;
-    this.posBottom = startY + this.vehicleHeight;
-
+  vehicleStartPosition() {
     if (this.direction === 1) {
       this.posX = this.frame;
     }
@@ -44,6 +41,13 @@ export default class Vehicle {
     if (this.direction === -1) {
       this.posX = this.screenX - 2 * this.vehicleWidth - this.frame;
     }
+  }
+
+  drawVehicle(c, startY) {
+    this.posTop = startY;
+    this.posBottom = startY + this.vehicleHeight;
+
+    this.vehicleStartPosition();
     c.fillStyle = "#000000";
 
     c.save();

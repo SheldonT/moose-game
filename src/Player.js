@@ -15,13 +15,6 @@ export default class Player {
     this.mooseBody = new Image();
     this.mooseFeet = new Image();
 
-    this.lives = 0; //number of lives given to the user, defined in the constructor
-    this.livesLeft = 0; //number of lives left. Counted during game play
-    ///////////////////////////////////////////////////////////////////////
-
-    this.livesLeft = lives;
-    this.lives = lives;
-
     this.mooseBody.src = "src/assets/moose.svg";
     //this.mooseBody.addEventListener('load', () => {}, false);
 
@@ -32,7 +25,10 @@ export default class Player {
     this.playerWidth = this.playerHeight * 0.42;
 
     this.incX = fieldWidth / 2 - this.playerWidth / 2;
-    this.incY = fieldHeight - this.playerHeight;
+    this.incY = fieldHeight - this.playerHeight - 10;
+
+    this.lives = lives;
+    this.score = 0;
   }
 
   resetPlayer() {
@@ -54,11 +50,35 @@ export default class Player {
     ctx.translate(this.incX, this.incY); //move canvas over to change player position.
 
     //draw moose feet
-    ctx.drawImage(this.mooseFeet, -5, 25 + this.i, footSize, footSize); //feet x and y positions are relative to the width and height of
-    ctx.drawImage(this.mooseFeet, 0, 50 - this.i, footSize, footSize);
+    ctx.drawImage(
+      this.mooseFeet,
+      (-1 * footSize) / 3,
+      this.playerHeight / 4 + this.i,
+      footSize,
+      footSize
+    ); //feet x and y positions are relative to the width and height of
+    ctx.drawImage(
+      this.mooseFeet,
+      0,
+      this.playerHeight - this.playerHeight / 3 - this.i,
+      footSize,
+      footSize
+    );
 
-    ctx.drawImage(this.mooseFeet, 24, 25 + this.i, footSize, footSize);
-    ctx.drawImage(this.mooseFeet, 19, 50 + this.i, footSize, footSize);
+    ctx.drawImage(
+      this.mooseFeet,
+      this.playerWidth - footSize / 1.4,
+      this.playerHeight / 4 - this.i,
+      footSize,
+      footSize
+    );
+    ctx.drawImage(
+      this.mooseFeet,
+      this.playerWidth - footSize,
+      this.playerHeight - this.playerHeight / 3 + this.i,
+      footSize,
+      footSize
+    );
 
     ctx.drawImage(this.mooseBody, 0, 0, this.playerWidth, this.playerHeight);
 
