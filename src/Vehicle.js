@@ -5,7 +5,8 @@ import vehiclePool from "./vehiclePool.js";
 export default class Vehicle {
   constructor(d, gfWidth, gfHeight) {
     this.frameReset = 0;
-    this.speed = Math.floor(Math.random() * 5) + 2; //starting speed
+    this.speedFactor = 1;
+    this.speed = 0;
     this.frame = gfWidth; //current frame count
     this.vehicleRange = gfWidth;
     this.screenX = gfWidth;
@@ -80,12 +81,10 @@ export default class Vehicle {
       this.vehicleRange = this.screenX + this.vehicleWidth;
 
       this.frameReset = this.frame - this.vehicleRange;
-      this.speed = Math.floor(Math.random() * 5) + 2; //change the speed of the vehicle
+      this.speed = Math.floor(Math.random() * 5) + this.speedFactor; //change the speed of the vehicle
       this.frame = (this.vehicleWidth + 100) * -1;
 
       this.vehicleImg.src = vehiclePool[id].vehicle;
-      //this.vehicleWidth = vehiclePool[id].width;
-      //this.vehicleHeight = vehiclePool[id].height;
     } else {
       this.frame = this.frame + this.speed; //increment frame by carSpeed.
     }

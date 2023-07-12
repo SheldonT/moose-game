@@ -7,8 +7,11 @@ export default class GameLogic {
     this.start = false;
     this.pause = false;
     this.win = false;
+    this.loose = false;
     this.level = 1;
     this.changeDir = 2;
+    this.lives = player.lives;
+    this.playerFurthestPosition = player.incY;
     this.gameLoop = () => gameLoop();
 
     document.addEventListener("keydown", (event) => {
@@ -17,20 +20,25 @@ export default class GameLogic {
   }
 
   resetGameBoard() {
+    if (!this.start) this.start = true;
     if (this.pause) {
-      console.log("resetGameBoar");
+      console.log("resetGameBoard");
       this.pause = !this.pause;
       for (let i = 0; i < this.vehicles.length; i++) {
         this.vehicles[i].posX = 0;
         this.vehicles[i].frame = this.vehicles[i].frameReset;
-        console.log(this.vehicles[i].posX);
       }
       this.player.resetPlayer();
-      if (this.player.lives <= 0) {
-        this.player.lives = 3;
+      this.playerFurthestPosition = this.player.incY;
+
+      if (this.loose) {
+        this.player.lives = this.lives;
         this.player.score = 0;
-        this.start = false;
+        this.level = 1;
       }
+
+      this.loose = false;
+      this.pause = false;
       this.gameLoop();
     }
   }
@@ -40,8 +48,15 @@ export default class GameLogic {
       case "ArrowUp": {
         if (this.player.incY >= 0 && this.start) {
           this.player.incY = this.player.incY - 10;
-          if (!this.pause && this.start)
+
+          if (
+            this.player.incY <= this.playerFurthestPosition &&
+            !this.pause &&
+            this.start
+          ) {
+            this.playerFurthestPosition = this.player.incY;
             this.player.score = this.player.score + 50;
+          }
         }
         break;
       }
@@ -73,9 +88,6 @@ export default class GameLogic {
       }
       case "Enter": {
         this.resetGameBoard();
-        if (!this.start) {
-          this.start = true;
-        }
         break;
       }
       case "Space": {
@@ -96,14 +108,30 @@ export default class GameLogic {
       console.log("You Won!");
       this.player.score = this.player.score + 1000;
       this.level = this.level + 1;
+      for (let i = 0; i < this.vehicles.length; i++) {
+        if (this.level <= 2) this.vehicles[i].speedFactor = 2;
+        if (this.level > 2 && this.level <= 6) this.vehicles[i].speedFactor = 3;
+        if (this.level > 6 && this.level <= 10)
+          this.vehicles[i].speedFactor = 4;
+        if (this.level > 10) this.vehicles[i].speedFactor = 5;
+      }
       this.win = true;
+      this.pause = true;
+    }
+  }
+
+  playerLoose() {
+    if (this.player.lives <= 0) {
+      console.log("You Lost");
+      this.player.score = this.player.score + 1000;
+      this.start = false;
+      this.loose = true;
       this.pause = true;
     }
   }
 
   playerHit() {
     for (let i = 0; i < this.vehicles.length; i++) {
-      console.log(this.vehicles[i].posX);
       if (
         this.vehicles[i].direction === 1 &&
         this.vehicles[i].posX + this.vehicles[i].vehicleWidth >=

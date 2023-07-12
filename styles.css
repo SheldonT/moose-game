@@ -3,15 +3,24 @@
 html {
   font-size: 10px;
 }
-
-.fieldContainer {
+.main {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin: 5rem 0rem 5rem 0rem;
+}
+
+.fieldContainer {
+  background-color: #8a4b2c;
+  display: inline-flex;
+  padding: 5rem;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-radius: 3rem;
 }
 
 .playField {
-  margin: 4rem 0 0 0;
   border-style: solid;
   border-width: 0.1rem;
+  border-radius: 1rem;
 }

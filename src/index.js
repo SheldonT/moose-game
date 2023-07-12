@@ -58,15 +58,13 @@ function background() {
 function gameEnd() {
   const gameOver = "Game Over";
 
-  setInterval(() => {
-    ctx.fillStyle = "#000000";
-    ctx.font = `40px ${font}`;
-    ctx.fillText(
-      gameOver,
-      gameFieldWidth / 2 - ctx.measureText(gameOver).width / 2,
-      gameFieldHeight / 2 + 20
-    );
-  }, 5000);
+  ctx.fillStyle = "#000000";
+  ctx.font = `40px ${font}`;
+  ctx.fillText(
+    gameOver,
+    gameFieldWidth / 2 - ctx.measureText(gameOver).width / 2,
+    gameFieldHeight / 2 + 20
+  );
 }
 
 function gameStart() {
@@ -89,10 +87,6 @@ function gameStart() {
 function gameLoop() {
   if (logic.start) frameCount = 0;
 
-  if (logic.pause) {
-    return;
-  }
-
   background();
 
   ctx.save();
@@ -111,7 +105,18 @@ function gameLoop() {
 
   logic.playerHit();
   logic.playerWin();
+  logic.playerLoose();
+
   scoreBoard.drawScoreBoard(ctx, moose.lives, moose.score, logic.level);
+
+  if (logic.loose) {
+    gameEnd();
+    return;
+  }
+
+  if (logic.pause) {
+    return;
+  }
 
   requestAnimationFrame(gameLoop);
 }
