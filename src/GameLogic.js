@@ -12,10 +12,19 @@ export default class GameLogic {
     this.changeDir = 2;
     this.lives = player.lives;
     this.playerFurthestPosition = player.incY;
+    this.controlButton = null;
     this.gameLoop = () => gameLoop();
 
     document.addEventListener("keydown", (event) => {
-      this.movePlayer(event.key);
+      this.controlButton = event.key;
+
+      if (this.controlButton === "Enter") {
+        this.resetGameBoard();
+      }
+    });
+
+    document.addEventListener("keyup", (event) => {
+      this.controlButton = null;
     });
   }
 
@@ -43,11 +52,18 @@ export default class GameLogic {
     }
   }
 
+  moveFeet() {
+    if (this.player.i === 8) this.changeDir = -1;
+    if (this.player.i === -8) this.changeDir = 1;
+
+    this.player.i = this.player.i + this.changeDir;
+  }
+
   movePlayer(k) {
     switch (k) {
       case "ArrowUp": {
         if (this.player.incY >= 0 && this.start) {
-          this.player.incY = this.player.incY - 10;
+          this.player.incY = this.player.incY - 1;
 
           if (
             this.player.incY <= this.playerFurthestPosition &&
@@ -58,6 +74,7 @@ export default class GameLogic {
             this.player.score = this.player.score + 50;
           }
         }
+        this.moveFeet();
         break;
       }
       case "ArrowDown": {
@@ -66,15 +83,17 @@ export default class GameLogic {
             this.player.fieldHeight - this.player.playerHeight - 20 &&
           this.start
         ) {
-          this.player.incY = this.player.incY + 10;
+          this.player.incY = this.player.incY + 1;
           if (!this.pause && this.start)
             this.player.score = this.player.score - 20;
         }
+        this.moveFeet();
         break;
       }
       case "ArrowLeft": {
         if (this.player.incX >= 0 && this.start)
-          this.player.incX = this.player.incX - 10;
+          this.player.incX = this.player.incX - 1;
+        this.moveFeet();
         break;
       }
       case "ArrowRight": {
@@ -83,24 +102,11 @@ export default class GameLogic {
             this.player.fieldWidth - this.player.playerWidth &&
           this.start
         )
-          this.player.incX = this.player.incX + 10;
-        break;
-      }
-      case "Enter": {
-        this.resetGameBoard();
-        break;
-      }
-      case "Space": {
-        console.log("Space");
-
+          this.player.incX = this.player.incX + 1;
+        this.moveFeet();
         break;
       }
     }
-
-    if (this.player.i === 8) this.changeDir = -2;
-    if (this.player.i === -8) this.changeDir = 2;
-
-    this.player.i = this.player.i + this.changeDir;
   }
 
   playerWin() {

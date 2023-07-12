@@ -102,6 +102,7 @@ function gameLoop() {
   lane[3].drawVehicle(ctx, gameFieldHeight * 0.7);
 
   ctx.restore();
+  logic.movePlayer(logic.controlButton);
 
   logic.playerHit();
   logic.playerWin();
