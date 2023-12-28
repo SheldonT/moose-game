@@ -5,6 +5,11 @@ import Vehicle from "./Vehicle.js";
 import GameLogic from "./GameLogic.js";
 import ScoreBoard from "./ScoreBoard.js";
 
+//const { Player } = require("./Player.js");
+//const { Vehicle } = require("./Vehicle.js");
+//const { GameLogic } = require("./GameLogic.js");
+//const { ScoreBoard } = require("./ScoreBoard.js");
+
 const canvas = document.getElementById("playField");
 
 const ctx = canvas.getContext("2d");

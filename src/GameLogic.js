@@ -13,6 +13,8 @@ export default class GameLogic {
     this.lives = player.lives;
     this.playerFurthestPosition = player.incY;
     this.controlButton = null;
+    this.stepHigh = new Audio("src/assets/sounds/stepHigh.mp3");
+    this.stepLow = new Audio("src/assets/sounds/stepLow.mp3");
     this.gameLoop = () => gameLoop();
 
     document.addEventListener("keydown", (event) => {
@@ -53,8 +55,15 @@ export default class GameLogic {
   }
 
   moveFeet() {
-    if (this.player.i === 8) this.changeDir = -1;
-    if (this.player.i === -8) this.changeDir = 1;
+    if (this.player.i === 8) {
+      this.changeDir = -1;
+      this.stepHigh.play();
+    }
+
+    if (this.player.i === -8) {
+      this.changeDir = 1;
+      this.stepLow.play();
+    }
 
     this.player.i = this.player.i + this.changeDir;
   }

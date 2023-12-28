@@ -3,7 +3,7 @@
 const path = require("path");
 
 module.exports = {
-  entry: "/src/index.js", // Replace './index.js' with the path to your entry point
+  entry: "src/index.js", // Replace './index.js' with the path to your entry point
   mode: "development",
   output: {
     path: path.resolve(__dirname, "dist"),

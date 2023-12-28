@@ -1,6 +1,7 @@
 /** @format */
 
 import vehiclePool from "./vehiclePool.js";
+//const { vehiclePool } = require("./vehiclePool.js");
 
 export default class Vehicle {
   constructor(d, gfWidth, gfHeight) {
