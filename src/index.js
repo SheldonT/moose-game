@@ -38,6 +38,7 @@ const logic = new GameLogic(lane, moose, gameLoop);
 const scoreBoard = new ScoreBoard(font, 30, gameFieldWidth);
 
 let frameCount = 0;
+let frameSnapShot = 0;
 
 function background() {
   ctx.fillStyle = backgroundColor;
@@ -60,45 +61,49 @@ function background() {
   );
 }
 
-function gameEnd() {
-  const gameOver = "Game Over";
+function message(text, interval = 50, flash = true) {
+  const textVisible = Math.ceil(frameCount / interval);
 
-  ctx.fillStyle = "#000000";
-  ctx.font = `40px ${font}`;
-  ctx.fillText(
-    gameOver,
-    gameFieldWidth / 2 - ctx.measureText(gameOver).width / 2,
-    gameFieldHeight / 2 + 20
-  );
-}
-
-function gameStart() {
-  const startText = "Press Enter";
-
-  frameCount++;
-
-  if (frameCount <= 50) {
+  if (flash && textVisible % 2 === 0) {
     ctx.fillStyle = "#000000";
     ctx.font = `40px ${font}`;
     ctx.fillText(
-      startText,
-      gameFieldWidth / 2 - ctx.measureText(startText).width / 2,
+      text,
+      gameFieldWidth / 2 - ctx.measureText(text).width / 2,
       gameFieldHeight / 2 + 20
     );
   }
-  if (frameCount >= 100) frameCount = 0;
+
+  if (!flash) {
+    ctx.fillStyle = "#000000";
+    ctx.font = `40px ${font}`;
+    ctx.fillText(
+      text,
+      gameFieldWidth / 2 - ctx.measureText(text).width / 2,
+      gameFieldHeight / 2 + 20
+    );
+  }
 }
 
 function gameLoop() {
-  if (logic.start) frameCount = 0;
-
+  frameCount++;
   background();
 
   ctx.save();
 
-  if (logic.start) moose.drawPlayer(ctx);
-
-  if (!logic.start) gameStart();
+  if (logic.start) {
+    console.log(frameCount - frameSnapShot);
+    if (frameCount - frameSnapShot <= 100) {
+      message("Ready", 40, false);
+    } else if (frameCount - frameSnapShot <= 300) {
+      message("GO!", 30);
+    } else {
+      moose.drawPlayer(ctx);
+    }
+  } else {
+    message("Press Enter", 50);
+    frameSnapShot = frameCount;
+  }
 
   lane[0].drawVehicle(ctx, gameFieldHeight * 0.21);
   lane[1].drawVehicle(ctx, gameFieldHeight * 0.3);
@@ -107,20 +112,24 @@ function gameLoop() {
   lane[3].drawVehicle(ctx, gameFieldHeight * 0.7);
 
   ctx.restore();
-  logic.movePlayer(logic.controlButton);
 
-  logic.playerHit();
-  logic.playerWin();
-  logic.playerLoose();
+  if (frameCount - frameSnapShot >= 500) {
+    logic.movePlayer();
+
+    logic.playerHit();
+    logic.playerWin();
+    logic.playerLoose();
+  }
 
   scoreBoard.drawScoreBoard(ctx, moose.lives, moose.score, logic.level);
 
   if (logic.loose) {
-    gameEnd();
+    message("Game Over", 50, false);
     return;
   }
-
   if (logic.pause) {
+    frameSnapShot = frameCount;
+    message("Press Enter", 50, false);
     return;
   }
 

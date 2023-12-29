@@ -68,8 +68,8 @@ export default class GameLogic {
     this.player.i = this.player.i + this.changeDir;
   }
 
-  movePlayer(k) {
-    switch (k) {
+  movePlayer() {
+    switch (this.controlButton) {
       case "ArrowUp": {
         if (this.player.incY >= 0 && this.start) {
           this.player.incY = this.player.incY - 1;
