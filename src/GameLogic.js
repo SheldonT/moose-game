@@ -42,12 +42,6 @@ export default class GameLogic {
       this.player.resetPlayer();
       this.playerFurthestPosition = this.player.incY;
 
-      if (this.loose) {
-        this.player.lives = this.lives;
-        this.player.score = 0;
-        this.level = 1;
-      }
-
       this.loose = false;
       this.pause = false;
       this.gameLoop();
@@ -138,7 +132,13 @@ export default class GameLogic {
   playerLoose() {
     if (this.player.lives <= 0) {
       console.log("You Lost");
-      this.player.score = this.player.score + 1000;
+      //this.player.score = this.player.score + 1000;
+
+      this.player.lives = this.lives;
+      this.player.score = 0;
+      this.level = 1;
+      this.vehicles.speedFactor = 1;
+
       this.start = false;
       this.loose = true;
       this.pause = true;

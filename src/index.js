@@ -92,7 +92,6 @@ function gameLoop() {
   ctx.save();
 
   if (logic.start) {
-    console.log(frameCount - frameSnapShot);
     if (frameCount - frameSnapShot <= 100) {
       message("Ready", 40, false);
     } else if (frameCount - frameSnapShot <= 300) {
@@ -113,7 +112,7 @@ function gameLoop() {
 
   ctx.restore();
 
-  if (frameCount - frameSnapShot >= 500) {
+  if (frameCount - frameSnapShot > 300) {
     logic.movePlayer();
 
     logic.playerHit();
