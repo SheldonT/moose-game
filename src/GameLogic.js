@@ -1,7 +1,14 @@
 /** @format */
-
 export default class GameLogic {
   constructor(vehicles, player, gameLoop) {
+    const baseURL = `file:///${__dirname}`;
+    const stepHigh = new URL("/src/assets/sounds/stepHigh.mp3", baseURL);
+
+    const stepLow = new URL("/src/assets/sounds/stepLow.mp3", baseURL);
+
+    console.log(stepLow);
+    console.log(stepHigh);
+
     this.vehicles = vehicles;
     this.player = player;
     this.start = false;
@@ -13,8 +20,8 @@ export default class GameLogic {
     this.lives = player.lives;
     this.playerFurthestPosition = player.incY;
     this.controlButton = null;
-    this.stepHigh = new Audio("src/assets/sounds/stepHigh.mp3");
-    this.stepLow = new Audio("src/assets/sounds/stepLow.mp3");
+    this.stepHigh = new Audio("src/assets/sounds/StepHigh.mp3");
+    this.stepLow = new Audio("src/assets/sounds/StepLow.mp3");
     this.gameLoop = () => gameLoop();
 
     document.addEventListener("keydown", (event) => {

@@ -13,6 +13,8 @@ const createWindow = () => {
   });
 
   win.loadFile("index.html");
+
+  console.log(path);
 };
 
 app.on("window-all-closed", () => {
