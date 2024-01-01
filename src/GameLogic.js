@@ -1,14 +1,6 @@
 /** @format */
 export default class GameLogic {
   constructor(vehicles, player, gameLoop) {
-    const baseURL = `file:///${__dirname}`;
-    const stepHigh = new URL("/src/assets/sounds/stepHigh.mp3", baseURL);
-
-    const stepLow = new URL("/src/assets/sounds/stepLow.mp3", baseURL);
-
-    console.log(stepLow);
-    console.log(stepHigh);
-
     this.vehicles = vehicles;
     this.player = player;
     this.start = false;
