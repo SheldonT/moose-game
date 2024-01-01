@@ -1,0 +1,38 @@
+{
+  "name": "moose-game",
+  "version": "1.0.0",
+  "repository": {
+    "url": "git+https://github.com/SheldonT/moose-game.git"
+  },
+  "author": "Sheldon Tower",
+  "description": "A small frogger-like game",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "build": "webpack",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "electron": "^28.0.0",
+    "gh-pages": "^5.0.0",
+    "svg-inline-loader": "^0.8.2",
+    "webpack": "^5.85.0",
+    "webpack-cli": "^5.1.2",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  }
+}
