@@ -11,7 +11,7 @@
     "start": "electron-forge start",
     "build": "webpack",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist,out",
+    "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "package": "electron-forge package",
     "make": "electron-forge make"
