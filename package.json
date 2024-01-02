@@ -6,6 +6,7 @@
   },
   "author": "Sheldon Tower",
   "description": "A small frogger-like game",
+  "main": "index.js",
   "scripts": {
     "start": "electron-forge start",
     "build": "webpack",
